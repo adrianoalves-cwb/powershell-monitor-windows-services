@@ -57,7 +57,7 @@ function Write-ActionLog {
 while ($true) {
   foreach ($serviceName in $windowsServiceList) 
   {
-    #Getting the mastersaf service windows service log full path
+    #Getting the MyApp service windows service log full path
     $serviceLogFullPath = Join-Path $serviceLogsPath ("{0}.log" -f $serviceName)
 
     #Getting the script log name with path
@@ -69,7 +69,7 @@ while ($true) {
       New-Item -ItemType File -Path $scriptLogsFullPath | Out-Null
     }
 
-    #Confirm if the mastersaf service windows service log exist
+    #Confirm if the MyApp service windows service log exist
     Write-Host "Checking serviceName: " $serviceName
     if (-not (Test-Path -LiteralPath $serviceLogFullPath)) { continue }
 
@@ -79,9 +79,9 @@ while ($true) {
 
         Write-ActionLog ("Error Pattern Found: {0}" -f $textPattern)
 
-        $subject = ("Mastersaf {0} | Service Restarted | $textPattern | {1}" -f $environment, $serviceName)
+        $subject = ("MyApp {0} | Service Restarted | $textPattern | {1}" -f $environment, $serviceName)
 
-        # Get last 10 lines from the Mastersaf Windows Service log
+        # Get last 10 lines from the MyApp Windows Service log
         $lines = Get-Content -LiteralPath $serviceLogFullPath -Tail 10 -ReadCount 1
 
         $sb = New-Object System.Text.StringBuilder
